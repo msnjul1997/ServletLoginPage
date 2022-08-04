@@ -14,8 +14,8 @@ import java.io.PrintWriter;
         description = "Login Servlet Testing",
         urlPatterns = {"/LoginServlet"},
         initParams = {
-                @WebInitParam(name = "user", value = "San"),
-                @WebInitParam(name = "password", value = "Kittu")
+                @WebInitParam(name = "user", value = "Santhosh"),
+                @WebInitParam(name = "password", value = "Kittumsn@1")
         }
 )
 public class LoginServlet extends HttpServlet {
@@ -27,26 +27,17 @@ public class LoginServlet extends HttpServlet {
         //get servlet config init params
         String userID=getServletConfig().getInitParameter("user");
         String password=getServletConfig().getInitParameter("password");
-
-//        if (userID.equals(user) && password.equals(pwd)){
-//            req.setAttribute("user",user);
-//            req.getRequestDispatcher("LoginSuccess.jsp" ).forward(req,resp);
-//
-//        }
-//        else {
-//            RequestDispatcher rd=getServletContext().getRequestDispatcher("/Login.html");
-//            PrintWriter out= resp.getWriter();
-//            out.println("<font color=red> Either username Or Password is Wrong </font> ");
-//            rd.include(req,resp);
-//        }
-
         // UC3 : Validating name of the user
-        String nameValidate = "^[A-Z][a-z]{2}";
-        if(userID.equals(user) && userID.matches(nameValidate) && password.equals(pwd)) {
+        String nameValidate = "^[A-Z][a-z]{5}";
+
+        // UC4 : Validating password of the user
+        String passwordValidate = "^(?=.*[0-9])(?=[^@#$%^&+=]*[@#$%^&+=][^@#$%^&+=]*$)(?=.*[a-z])(?=.*[A-Z]).{8,}$";
+
+        if(userID.equals(user) && userID.matches(nameValidate) && password.equals(pwd) && password.matches(passwordValidate)) {
             req.setAttribute("user",user);
             req.getRequestDispatcher("LoginSuccess.jsp").forward(req, resp);
         } else {
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/Login.html");
             PrintWriter out  = resp.getWriter();
             out.println("<font color = red> Either username or password is wrong</font>");
             rd.include(req, resp);
